@@ -34,7 +34,7 @@ protected:
   int temps;
   
 public:
-    // initialisation du temps de rafraichiisement
+    // initialisation du temps de rafraichissement
   DigitalActuatorLED(int t);
   // thread representant l'actionneur et permettant de fonctionner independamment de la board
   virtual void run();
@@ -66,16 +66,11 @@ private:
 
 public :
   //constructeur ne pas oublier d'initialiser la classe mere
-	AnalogSensorLuminosity(int d, int l);
+	AnalogSensorLuminosity(int d);
   // thread representant le capteur et permettant de fonctionner independamment de la board
   virtual void run();
 };
 
-class IntelligentDigitalActuatorLED : public DigitalActuatorLED{
-private :
 
-public :
-	void setLuminosityLed();
-};
 
 #endif
