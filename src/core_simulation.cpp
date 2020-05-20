@@ -118,6 +118,7 @@ void Device::setI2CAddr(int addr, I2C * bus){
 void Board::run(){
   try{
     setup();
+		beginMessage();
     while(1) loop();
   }
   catch(BoardException e){
