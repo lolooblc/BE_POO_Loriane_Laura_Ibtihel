@@ -38,10 +38,10 @@ void Board::loop(){
   //int val;
   //static int cpt=0;
   static int bascule=0;
-  int i=0;
+  //int i=0;
 
-  for(i=0;i<10;i++){
 /*
+  for(i=0;i<10;i++){
 
     // lecture sur la pin 1 :
     val=analogRead(1);
@@ -52,9 +52,7 @@ void Board::loop(){
       sprintf(buf,"%d",val);
       bus.write(1,buf,100);
 		}
-*/
 
-/*
 
 		// lecture sur la pin 2 : capteur de luminosité
     val=analogRead(2);
@@ -69,28 +67,23 @@ void Board::loop(){
 
     cpt++;
 		sleep(1);
-*/
 
-	}
+	}*/
 
 		// on eteint et on allume la LED
   	if(bascule) {
-    	digitalWrite(0,HIGH);
-    	digitalWrite(1,HIGH);
-   		digitalWrite(2,HIGH);
-   	 	digitalWrite(3,HIGH);
+    	digitalWrite(ledStatePinGreen,HIGH);
+    	digitalWrite(ledStatePinYellow,HIGH);
+   		digitalWrite(ledStatePinRed,HIGH);
+   	 	digitalWrite(ledStatePinBlue,HIGH);
 		}
   	else {
-  	 digitalWrite(0,LOW);
-   	 digitalWrite(1,LOW);
-   	 digitalWrite(2,LOW);
-   	 digitalWrite(3,LOW);
+  		digitalWrite(ledStatePinGreen,LOW);
+   		digitalWrite(ledStatePinYellow,LOW);
+   		digitalWrite(ledStatePinRed,LOW);
+   		digitalWrite(ledStatePinBlue,LOW);
 		}
  	 	bascule=1-bascule;
-
-
-
-  
 }
 
 

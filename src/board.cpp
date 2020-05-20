@@ -15,10 +15,10 @@ int main(){
   // branchement des capteurs actionneurs
   esp8266.i2c(1,screen);
 
-  esp8266.pin(0,led1);
-  esp8266.pin(1,led2);
-  esp8266.pin(2,led3);
-  esp8266.pin(3,led4);
+  esp8266.pin(ledStatePinGreen,led1);
+  esp8266.pin(ledStatePinYellow,led2);
+  esp8266.pin(ledStatePinRed,led3);
+  esp8266.pin(ledStatePinBlue,led4);
 
 
   // allumage de la carte
