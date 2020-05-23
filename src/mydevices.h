@@ -17,7 +17,7 @@ private:
   int val;
   // temps entre 2 prises de valeurs
   int temps;
-  
+
 public:
   //constructeur ne pas oublier d'initialiser la classe mere
   AnalogSensorTemperature(int d,int  t);
@@ -27,14 +27,14 @@ public:
 
 // exemple d'actionneur digital : une led, ne pas oublier d'heriter de Device
 class DigitalActuatorLED: public Device {
-private:
+protected:
   // etat de la LED
   int state;
   // temps entre 2 affichage de l etat de la led
   int temps;
-  
+
 public:
-    // initialisation du temps de rafraichiisement
+    // initialisation du temps de rafraichissement
   DigitalActuatorLED(int t);
   // thread representant l'actionneur et permettant de fonctionner independamment de la board
   virtual void run();
@@ -45,12 +45,47 @@ class I2CActuatorScreen : public Device{
 protected:
     // memorise l'affichage de l'ecran
   char buf[I2C_BUFFER_SIZE];
-  
+
+
 public:
   // constructeur
   I2CActuatorScreen ();
   // thread representant le capteur et permettant de fonctionner independamment de la board
   virtual void run();
 };
+
+// exemple de capteur analogique de luminosté, ne pas oublier d'heriter de Device
+class AnalogSensorLuminosity : public Device{
+private:
+  // fait osciller la valeur du capteur de 1
+  int alea;
+  // temps entre 2 prises de valeurs
+  int temps;
+	int val;
+
+
+public :
+  //constructeur ne pas oublier d'initialiser la classe mere
+	AnalogSensorLuminosity(int d);
+  // thread representant le capteur et permettant de fonctionner independamment de la board
+  virtual void run();
+};
+
+// exemple d'actionneur analogue : un buzzeur, ne pas oublier d'heriter de Device
+class AnalogActuatorBuzzer: public Device {
+protected:
+  // fréquence du buzzeur
+  double frequency;
+  // temps du klaxonnage
+  int temps;
+
+public:
+    // initialisation du temps de rafraichissement et de la fréquence
+  AnalogActuatorBuzzer(double frequency,int temps);
+  // thread representant l'actionneur et permettant de fonctionner independamment de la board
+  virtual void run();
+};
+
+
 
 #endif

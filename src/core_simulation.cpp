@@ -118,6 +118,7 @@ void Device::setI2CAddr(int addr, I2C * bus){
 void Board::run(){
   try{
     setup();
+		beginMessage();
     while(1) loop();
   }
   catch(BoardException e){
@@ -128,7 +129,7 @@ void Board::run(){
 void Board::pin(int p, Device& s){
   s.setPinMem(&io[p], &stateio[p]);
   tabthreadpin[p]=new thread(&Device::run,&s);
-  
+
 }
 
 void Board::pinMode(int p,enum typeio t){
@@ -173,4 +174,5 @@ void Board::i2c(int addr,Device& dev){
   dev.setI2CAddr(addr,&bus);
   tabthreadbus[addr]=new thread(&Device::run,&dev);
 }
+
 

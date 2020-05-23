@@ -6,13 +6,33 @@
 #include <thread>
 #include <mutex>
 
-#define DELAY 3
+#define DELAY 5
+#define FREQ 1000
 #define TEMP 22
 #define HIGH 1
 #define LOW 0
 #define MAX_I2C_DEVICES 4
 #define I2C_BUFFER_SIZE 1024
 #define MAX_IO_PIN 6
+
+
+#define MAXARRAY 10 // définir la longeur de la sequence
+
+#define piezoPin 13 // Broche piézo
+#define buttonPinRed 4 // broche bouton poussoire led rouge
+#define buttonPinGreen 5 // broche bouton poussoire led vert
+#define buttonPinYellow 6 // broche bouton poussoire led jaune
+#define buttonPinBlue 7 // broche bouton poussoire led bleu
+
+#define buttonPinMenu 8 //broche bouton poussoire menu
+
+#define pinBuzzer 5
+
+#define ledStatePinGreen 0 // led d' etat verte
+#define ledStatePinYellow 1 // led d' etat jaune
+#define ledStatePinRed 2 // led d' etat rouge
+#define ledStatePinBlue 3 // led d' etat bleu
+
 
 using namespace std;
 
@@ -102,7 +122,7 @@ public:
   Terminal Serial;
     // threads representant chaque senseur/actionneur sur le bus I2C
   thread *tabthreadbus[MAX_I2C_DEVICES];
-    
+
 // simulation de la boucle de controle arduino
     void run();
   // accroachage d'un senseur/actionneur à une pin
@@ -123,6 +143,8 @@ public:
   void setup();
     // fonction arduino : boucle de controle de la carte arduino
   void loop();
+		// fonction arduino : demarraeg
+  void beginMessage();
 };
 
 #endif
