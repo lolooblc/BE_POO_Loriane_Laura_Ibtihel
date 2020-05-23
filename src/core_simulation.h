@@ -6,7 +6,7 @@
 #include <thread>
 #include <mutex>
 
-#define DELAY 5
+#define DELAY 3
 #define TEMP 22
 #define HIGH 1
 #define LOW 0
@@ -19,7 +19,7 @@
 
 #define piezoPin 13 // Broche piézo
 #define buttonPinRed 4 // broche bouton poussoire led rouge
-#define buttonPinGreen 5 // broche bouton poussoire vert
+#define buttonPinGreen 5 // broche bouton poussoire led vert
 #define buttonPinYellow 6 // broche bouton poussoire led jaune
 #define buttonPinBlue 7 // broche bouton poussoire led bleu
 

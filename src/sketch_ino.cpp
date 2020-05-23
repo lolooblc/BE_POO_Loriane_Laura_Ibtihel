@@ -30,11 +30,12 @@ void Board::beginMessage(){
   sprintf(buf,"Bienvenue ");
   Serial.println(buf);
   bus.write(1,buf,100);
+	sleep(DELAY);
 }
 
 // la boucle de controle arduino
 void Board::loop(){
-  //char buf[100];
+  char buf[100];
   //int val;
   //static int cpt=0;
   static int bascule=0;
@@ -69,21 +70,43 @@ void Board::loop(){
 		sleep(1);
 
 	}*/
+		
 
 		// on eteint et on allume la LED
   	if(bascule) {
     	digitalWrite(ledStatePinGreen,HIGH);
+    	sprintf(buf,"led verte allume");
+    	Serial.println(buf);
     	digitalWrite(ledStatePinYellow,HIGH);
+    	sprintf(buf,"led jaune allume");
+    	Serial.println(buf);
    		digitalWrite(ledStatePinRed,HIGH);
+    	sprintf(buf,"led rouge allume");
+    	Serial.println(buf);
    	 	digitalWrite(ledStatePinBlue,HIGH);
+    	sprintf(buf,"led bleue allume");
+    	Serial.println(buf);
+			sleep(DELAY);
 		}
   	else {
   		digitalWrite(ledStatePinGreen,LOW);
+   		sprintf(buf,"led verte eteinte");
+    	Serial.println(buf);
    		digitalWrite(ledStatePinYellow,LOW);
+   		sprintf(buf,"led jaune eteinte");
+    	Serial.println(buf);
    		digitalWrite(ledStatePinRed,LOW);
+   		sprintf(buf,"led rouge eteinte");
+    	Serial.println(buf);
    		digitalWrite(ledStatePinBlue,LOW);
+   		sprintf(buf,"led blue eteinte");
+    	Serial.println(buf);
+			sleep(DELAY);
 		}
  	 	bascule=1-bascule;
+
+
 }
+
 
 
