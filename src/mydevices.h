@@ -53,4 +53,17 @@ public:
   virtual void run();
 };
 
+class ExternalDigitalSensorButton : public Device {
+ protected :
+  //etat du bouton
+  int button_state;
+  // temps entre 2 affichage de l etat de la led
+  int temps;
+ public :
+  ExternalDigitalSensorButton(int t);
+  int updateState();
+  virtual void run();
+};
+
+
 #endif

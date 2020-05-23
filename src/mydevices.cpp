@@ -1,5 +1,6 @@
 
 #include "mydevices.h"
+#include <fstream>
 
 using namespace std;
 
@@ -28,9 +29,9 @@ void DigitalActuatorLED::run(){
     if (state==LOW)
       cout << "((((eteint))))\n";
     else
-    cout << "((((allume))))\n";
+      cout << "((((allume))))\n";
     sleep(temps);
-    }
+  }
 }
 
 // classe I2CActuatorScreen
@@ -47,7 +48,30 @@ void I2CActuatorScreen::run(){
     }
 }
 
+//classe ExternalDigitalSensorButton
+
+//constructeur :
+ExternalDigitalSensorButton::ExternalDigitalSensorButton(int t):Device(),button_state(LOW),temps(t){ 
+} //initialement le bouton est relaché
 
 
+int ExternalDigitalSensorButton::updateState() {
+  if(ifstream("on.txt")){ //le fichier existe et l'état passe du bouton passe "on"
+    button_state=1;
+  }
+  else
+    button_state=0;
+  return button_state;
+}  
 
-
+void ExternalDigitalSensorButton::run(){
+  while(1){
+    if(ptrmem!=NULL)
+      *ptrmem=updateState();
+    if (button_state)
+      cout << "((((bouton enfoncé))))\n";
+    else
+      cout << "((((bouton relaché))))\n";
+    sleep(temps);
+  }
+}
