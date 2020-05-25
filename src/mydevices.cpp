@@ -1,28 +1,7 @@
-
+#include <fstream>
 #include "mydevices.h"
 
 using namespace std;
-
-//variable globale luminosite environnement
-//static volatile int lumiosite_environnement = 200;
-
-/*
-//classe AnalogSensorTemperature
-AnalogSensorTemperature::AnalogSensorTemperature(int d,int  t):Device(),val(t),temps(d){
-  alea=1;
-}
-
-
-void AnalogSensorTemperature::run(){
-  while(1){
-    alea=1-alea;
-    if(ptrmem!=NULL)
-      *ptrmem=val+alea;
-    sleep(temps);
-  }
-}
-
-*/ 
 
 //classe DigitalActuatorLED
 DigitalActuatorLED::DigitalActuatorLED(int t):Device(),state(LOW),temps(t){
@@ -56,20 +35,34 @@ void I2CActuatorScreen::run(){
     }
 }
 
-/*
-//classe AnalogSensorLuminosity
-AnalogSensorLuminosity::AnalogSensorLuminosity(int t):Device(),temps(t){
-  alea=1;
-}
 
-void AnalogSensorLuminosity::run(){
+//classe ExternalDigitalSensorButton
+
+//constructeur :
+ExternalDigitalSensorButton::ExternalDigitalSensorButton(int t):Device(),button_state(LOW),temps(t){ 
+} //initialement le bouton est relaché
+
+
+
+int ExternalDigitalSensorButton::updateState() {
+  if(ifstream("on.txt")){ //le fichier existe et l'état passe du bouton passe "on"
+    button_state=1;
+  }
+  else
+    button_state=0;
+  return button_state;
+}  
+
+void ExternalDigitalSensorButton::run(){
   while(1){
-    alea=1-alea;
     if(ptrmem!=NULL)
-      *ptrmem=lumiosite_environnement+alea;
+      *ptrmem=updateState();
+    if (button_state)
+      cout << "((((bouton enfoncé))))\n";
+    else
+      cout << "((((bouton relaché))))\n";
     sleep(temps);
   }
 }
-*/
 
 

@@ -1,6 +1,7 @@
 #ifndef MYDEVICES_H
 #define MYDEVICES_H
 
+
 #include <iostream>
 #include <thread>
 #include <unistd.h>
@@ -63,7 +64,6 @@ private:
   int temps;
 	int val;
 
-
 public :
   //constructeur ne pas oublier d'initialiser la classe mere
 	AnalogSensorLuminosity(int d);
@@ -71,6 +71,19 @@ public :
   virtual void run();
 };
 
+
+
+class ExternalDigitalSensorButton : public Device {
+ protected :
+  //etat du bouton
+  int button_state;
+  // temps entre 2 affichage de l etat de la led
+  int temps;
+ public :
+  ExternalDigitalSensorButton(int t);
+  int updateState();
+  virtual void run();
+};
 
 
 #endif

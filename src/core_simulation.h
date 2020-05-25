@@ -18,17 +18,18 @@
 #define MAXARRAY 10 // définir la longeur de la sequence
 
 #define piezoPin 13 // Broche piézo
-#define buttonPinRed 4 // broche bouton poussoire led rouge
-#define buttonPinGreen 5 // broche bouton poussoire led vert
-#define buttonPinYellow 6 // broche bouton poussoire led jaune
-#define buttonPinBlue 7 // broche bouton poussoire led bleu
+
+#define PIN_GREEN_BUTTON 5 // broche bouton poussoire led verte
+#define PIN_YELLOW_BUTTON 6 // broche bouton poussoire led jaune
+#define PIN_RED_BUTTON 7 // broche bouton poussoire led rouge
+#define PIN_BLUE_BUTTON 8 // broche bouton poussoire led blue
 
 #define buttonPinMenu 8 //broche bouton poussoire menu
 
-#define ledStatePinGreen 0 // led d' etat verte
-#define ledStatePinYellow 1 // led d' etat jaune
-#define ledStatePinRed 2 // led d' etat rouge
-#define ledStatePinBlue 3 // led d' etat bleu
+#define ledPinGreen 1 // led d' etat verte
+#define ledPinYellow 2 // led d' etat jaune
+#define ledPinRed 3 // led d' etat rouge
+#define ledPinBlue 4 // led d' etat bleu
 
 
 using namespace std;
@@ -142,6 +143,10 @@ public:
   void loop();
 		// fonction arduino : demarraeg
   void beginMessage();
+	//fonction de génère un tableau d'entier correspondant aux couleurs
+	void Colors(); 
+	//fonction affiche les couleurs
+	void giveSignalSequence(int value);
 };
 
 #endif
