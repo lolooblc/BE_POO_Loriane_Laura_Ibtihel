@@ -145,9 +145,10 @@ public:
 	//fonction de génère un tableau d'entier correspondant aux couleurs
 	void generate_sequence(); 
 	//fonction affiche les couleurs
-	void randomSequenceDisplay(int value);
-	//allumerLED
-	void answerLED(int value);
+	void show_sequence();
+	void get_sequence();
+	void wrong_sequence();
+	void right_sequence();
 };
 
 #endif

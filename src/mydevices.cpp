@@ -4,7 +4,8 @@
 using namespace std;
 
 //classe DigitalActuatorLED
-DigitalActuatorLED::DigitalActuatorLED(int t):Device(),state(LOW),temps(t){
+DigitalActuatorLED::DigitalActuatorLED(int t, string nomLed):Device(),state(LOW),temps(t){
+	nomLeds = nomLed;
 }
 
 void DigitalActuatorLED::run(){
@@ -12,10 +13,10 @@ void DigitalActuatorLED::run(){
     if(ptrmem!=NULL)
       state=*ptrmem;
     if (state==LOW){
-      cout << "((((eteint))))\n";
+      cout <<"(((( " <<nomLeds <<" eteint))))\n";
 		}
     else {
-    	cout << "((((allume))))\n";
+    	cout <<"(((( " <<nomLeds <<" allume))))\n";
 		}
     sleep(temps);
 	}
@@ -56,7 +57,6 @@ int ExternalDigitalSensorButton::updateState() {
 
 void ExternalDigitalSensorButton::run(){
   while(1){
-		cout <<"texte : "<<textes <<endl;
     if(ptrmem!=NULL)
       *ptrmem=updateState();
     if (button_state){

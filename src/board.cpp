@@ -6,15 +6,16 @@ int main(){
   // creation d'une board
   Board esp8266;
   // achat des senseurs et actionneurs
-	DigitalActuatorLED led1(DELAY); 
-	DigitalActuatorLED led2(DELAY); 
-	DigitalActuatorLED led3(DELAY); 
-	DigitalActuatorLED led4(DELAY); 
+	DigitalActuatorLED led1(DELAY, "led verte"); 
+	DigitalActuatorLED led2(DELAY, "led jaune"); 
+	DigitalActuatorLED led3(DELAY, "led rouge"); 
+	DigitalActuatorLED led4(DELAY, "led bleue"); 
 
-	ExternalDigitalSensorButton ButtonGreenLED(DELAY, "on1.txt");
-	ExternalDigitalSensorButton ButtonYellowLED(DELAY,"on2.txt");
-	ExternalDigitalSensorButton ButtonRedLED(DELAY,"on3.txt");
-	ExternalDigitalSensorButton ButtonBlueLED(DELAY,"on4.txt");
+	ExternalDigitalSensorButton ButtonGreenLED(DELAY, "bouttonVert.txt");
+	ExternalDigitalSensorButton ButtonYellowLED(DELAY,"bouttonJaune.txt");
+	ExternalDigitalSensorButton ButtonRedLED(DELAY,"bouttonRouge.txt");
+	ExternalDigitalSensorButton ButtonBlueLED(DELAY,"bouttonBleu.txt");
+	ExternalDigitalSensorButton ButtonMENU(DELAY,"bouttonMenu.txt");
 
   I2CActuatorScreen screen;
   
@@ -30,6 +31,8 @@ int main(){
 	esp8266.pin(PIN_YELLOW_BUTTON,ButtonYellowLED); //PIN_RED_BUTTON
 	esp8266.pin(PIN_RED_BUTTON,ButtonRedLED); //PIN_RED_BUTTON
 	esp8266.pin(PIN_BLUE_BUTTON,ButtonBlueLED); //PIN_RED_BUTTON
+
+	esp8266.pin(buttonPinMenu,ButtonMENU); //PIN_MENU
 
 
   // allumage de la carte

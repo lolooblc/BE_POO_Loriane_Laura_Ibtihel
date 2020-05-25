@@ -27,16 +27,21 @@ void Board::setup(){
 // Message de démarrage
 void Board::beginMessage(){
   char buf[100];
-  sprintf(buf,"Départ du jeu ");
+  sprintf(buf,"Simon Game ");
   Serial.println(buf);
   bus.write(1,buf,100);
+	digitalWrite(ledPinGreen, LOW);
+	digitalWrite(ledPinYellow, LOW);
+	digitalWrite(ledPinRed, LOW);
+	digitalWrite(ledPinBlue, LOW);
 	sleep(DELAY);
 }
 
 
 
 int sequence[MAX_LEVEL]; // contient la suite de chiffres pour les couleurs a afficher
-//int your_sequence[MAX_LEVEL];
+int your_sequence[MAX_LEVEL];
+int level = 1;
 
 void Board::generate_sequence(){
   for(int i = 0; i < MAX_LEVEL; i++)
@@ -45,199 +50,187 @@ void Board::generate_sequence(){
 }
 
 
-void Board::randomSequenceDisplay(int value){
-  //affichage LEDs
+void Board::show_sequence(){
 	char buf[100];
-  for(int i = 0; i <= value; i++){
-    digitalWrite(1 + sequence[i],HIGH);
+	for (int i = 0; i < level; i++){
+
+    digitalWrite(1 + sequence[i],HIGH); //Allume LED
+
 		if (1 + sequence[i] == 1 ) {
-			sprintf(buf,"La led verte s'allume ");
+			sprintf(buf,"///////// La led verte s'allume ///////// ");
     	Serial.println(buf);
 		}
 		else if (1 + sequence[i] == 2) {
-   		sprintf(buf,"La led jaune s'allume ");
+   		sprintf(buf,"////////// La led jaune s'allume ///////// ");
     	Serial.println(buf);
 		}
 		else if (1 + sequence[i] == 3) {
-    	sprintf(buf,"La led rouge s'allume ");
+    	sprintf(buf,"///////// La led rouge s'allume /////////");
     	Serial.println(buf);
 		}
 		else {
-   		sprintf(buf,"La led bleue s'allume ");
+   		sprintf(buf,"///////// La led bleue s'allume /////////");
     	Serial.println(buf);
 		}
-    sleep(DELAY);
+		sleep(DELAY/2);
 
-    digitalWrite(1 + sequence[i], LOW); 
+    digitalWrite(1 + sequence[i], LOW); //Eteint LED
+
 		if (1 + sequence[i] == 1 ) {
-			sprintf(buf,"La led verte s'éteind ");
+			sprintf(buf,"///////// La led verte s'éteind /////////");
     	Serial.println(buf);
 		}
 		else if (1 + sequence[i] == 2) {
-   		sprintf(buf,"La led jaune s'éteind ");
+   		sprintf(buf,"///////// La led jaune s'éteind /////////");
     	Serial.println(buf);
 		}
 		else if (1 + sequence[i] == 3) {
-    	sprintf(buf,"La led rouge s'éteind ");
+    	sprintf(buf,"///////// La led rouge s'éteind /////////");
     	Serial.println(buf);
 		}
 		else {
-   		sprintf(buf,"La led bleue s'éteind ");
+   		sprintf(buf,"///////// La led bleue s'éteind /////////");
     	Serial.println(buf);
 		}
-		sleep(DELAY);
-		break;
-  }
+		sleep(DELAY/2);
+	}
 }
 
+void Board::get_sequence() {
+	char buf[100];
+	int flag = 0; //this flag indicates if the sequence is correct
+	for (int i = 0; i < level; i++){
 
-void Board::answerLED(int value){
-  // Affichage LED
-  digitalWrite(1+value, HIGH);
-	sleep(DELAY);
-  digitalWrite(1+value, LOW);
-}
+		sprintf(buf,"*******Saississez ********");
+    Serial.println(buf);
+		flag = 0;
+		while(flag == 0){
+			if (digitalRead(PIN_GREEN_BUTTON) == HIGH){
+				digitalWrite(ledPinGreen, HIGH);
+				your_sequence[i] = ledPinGreen;
+				flag = 1;
+				sleep(DELAY);
+				cout << "vertvertvert" << endl;
+				if (your_sequence[i] != (1+sequence[i])){
+					cout << your_sequence[i] <<endl;
+					cout << sequence[i] <<endl;
+					sprintf(buf,"Mauvaise séquence");
+   				Serial.println(buf);
+					wrong_sequence();
+					return;
+				}
+				digitalWrite(ledPinGreen, LOW);
+			}
 
-// la boucle de controle arduino
-void Board::loop(){
-  char buf[100];
-	int state_buttonGreen;
-	int state_buttonYellow;
-	int state_buttonRed;
-	int state_buttonBlue;
-	int buttonCode = 0;
-  //int val;
-  static int cpt=0;
-  //static int bascule=0;
-  //int i=0;
+			if (digitalRead(PIN_YELLOW_BUTTON) == HIGH){
+				digitalWrite(ledPinYellow, HIGH);
+				your_sequence[i] = ledPinYellow;
+				flag = 1;
+				sleep(DELAY);
+				cout << "jaunejaunejaune" << endl;
+				if (your_sequence[i] != (1+sequence[i])){
+					cout << your_sequence[i] <<endl;
+					cout << sequence[i] <<endl;
+					sprintf(buf,"Mauvaise séquence");
+   				Serial.println(buf);
+					wrong_sequence();
+					return;
+				}
+				digitalWrite(ledPinYellow, LOW);
+			}
 
-	generate_sequence();
-	for(int i = 0; i <= cpt; i++){ //boucle extérieure
-		randomSequenceDisplay(i);
+			if (digitalRead(PIN_RED_BUTTON) == HIGH){
+				digitalWrite(ledPinRed, HIGH);
+				your_sequence[i] = ledPinRed;
+				flag = 1;
+				sleep(DELAY);
+				cout << "redredred" << endl;
+				if (your_sequence[i] != (1+sequence[i])){
+					cout << your_sequence[i] <<endl;
+					cout << sequence[i] <<endl;
+					sprintf(buf,"Mauvaise séquence");
+   				Serial.println(buf);
+					wrong_sequence();
+					return;
+				}
+				digitalWrite(ledPinRed, LOW);
+			}
 
-		if(analogRead(PIN_GREEN_BUTTON)==1)
-			buttonCode = 0;
-		if(analogRead(PIN_YELLOW_BUTTON)==1)
-			buttonCode = 1;
-		if(analogRead(PIN_RED_BUTTON)==1)
-			buttonCode = 2;
-		if(analogRead(PIN_BLUE_BUTTON)==1)
-			buttonCode = 3;
-		answerLED(buttonCode);
-
-
-
-
-
-
-	 // lecture sur la pin 5 :
-   state_buttonGreen=analogRead(PIN_GREEN_BUTTON);
-   sprintf(buf,"etat du bouton poussoir LED verte : %d",state_buttonGreen);
-   Serial.println(buf);
-	 // lecture sur la pin 6 :
-   state_buttonYellow=analogRead(PIN_YELLOW_BUTTON);
-   sprintf(buf,"etat du bouton poussoir LED jaune : %d",state_buttonYellow);
-   Serial.println(buf);
-		if(cpt%5==0){
-      // tous les 5 fois on affiche sur l ecran le bouton
-      sprintf(buf,"%d",state_buttonYellow);
-      bus.write(1,buf,100);
-		}
-
-	 // lecture sur la pin 7 :
-   state_buttonRed=analogRead(PIN_RED_BUTTON);
-   sprintf(buf,"etat du bouton poussoir LED rouge : %d",state_buttonRed);
-   Serial.println(buf);
-		if(cpt%5==0){
-      // tous les 5 fois on affiche sur l ecran le bouton
-      sprintf(buf,"%d",state_buttonRed);
-      bus.write(1,buf,100);
-		}
-
-	 // lecture sur la pin 8 :
-   state_buttonBlue=analogRead(PIN_BLUE_BUTTON);
-   sprintf(buf,"etat du bouton poussoir LED blue : %d",state_buttonBlue);
-   Serial.println(buf);
-		if(cpt%5==0){
-      // tous les 5 fois on affiche sur l ecran le bouton
-      sprintf(buf,"%d",state_buttonBlue);
-      bus.write(1,buf,100);
+			if (digitalRead(PIN_BLUE_BUTTON) == HIGH){
+				digitalWrite(ledPinBlue, HIGH);
+				your_sequence[i] = ledPinBlue;
+				cout << "bleubleubleu" << endl;
+				flag = 1;
+				sleep(DELAY);
+				if (your_sequence[i] != (1+sequence[i])){
+					cout << your_sequence[i] <<endl;
+					cout << sequence[i] <<endl;
+					sprintf(buf,"Mauvaise séquence");
+   				Serial.println(buf);
+					wrong_sequence();
+					return;
+				}	
+				digitalWrite(ledPinBlue, LOW);
+			}
 		}
 	}
-	cpt++;
-	sleep(DELAY);
-	
-
-
-
-/*
-  for(i=0;i<10;i++){
-
-    // lecture sur la pin 1 :
-    val=analogRead(1);
-    sprintf(buf,"led1 %d",val);
-    Serial.println(buf);
-    if(cpt%5==0){
-      // tous les 5 fois on affiche sur l ecran la led1
-      sprintf(buf,"%d",val);
-      bus.write(1,buf,100);
-		}
-
-
-		// lecture sur la pin 2 : capteur de luminosité
-    val=analogRead(2);
-    sprintf(buf,"luminosité %d",val);
-    Serial.println(buf);
-
-    if(cpt%5==0){
-      // tous les 5 fois on affiche sur l ecran la luminosité
-      sprintf(buf,"%d",val);
-      bus.write(2,buf,100);
-    }
-
-    cpt++;
-		sleep(1);
-
-	}*/
-		
-/*
-
-		// on eteint et on allume la LED
-  	if(bascule) {
-    	digitalWrite(ledPinGreen,HIGH);
-    	sprintf(buf,"led verte allume");
-    	Serial.println(buf);
-    	digitalWrite(ledPinYellow,HIGH);
-    	sprintf(buf,"led jaune allume");
-    	Serial.println(buf);
-   		digitalWrite(ledPinRed,HIGH);
-    	sprintf(buf,"led rouge allume");
-    	Serial.println(buf);
-   	 	digitalWrite(ledPinBlue,HIGH);
-    	sprintf(buf,"led bleue allume");
-    	Serial.println(buf);
-			sleep(DELAY);
-		}
-  	else {
-  		digitalWrite(ledPinGreen,LOW);
-   		sprintf(buf,"led verte eteinte");
-    	Serial.println(buf);
-   		digitalWrite(ledPinYellow,LOW);
-   		sprintf(buf,"led jaune eteinte");
-    	Serial.println(buf);
-   		digitalWrite(ledPinRed,LOW);
-   		sprintf(buf,"led rouge eteinte");
-    	Serial.println(buf);
-   		digitalWrite(ledPinBlue,LOW);
-   		sprintf(buf,"led blue eteinte");
-    	Serial.println(buf);
-			sleep(DELAY);
-		}
- 	 	bascule=1-bascule;
-*/
-
-
+	sprintf(buf,"Bonne séquence");
+	Serial.println(buf);
+	right_sequence();
 }
+
+void Board::wrong_sequence(){
+	for (int i = 0; i < 3; i++){
+		digitalWrite(ledPinGreen, HIGH);
+		digitalWrite(ledPinYellow, HIGH);
+		digitalWrite(ledPinRed, HIGH);
+		digitalWrite(ledPinBlue, HIGH);
+		sleep(DELAY);
+		digitalWrite(ledPinGreen, LOW);
+		digitalWrite(ledPinYellow, LOW);
+		digitalWrite(ledPinRed, LOW);
+		digitalWrite(ledPinBlue, LOW);
+		sleep(DELAY);;
+	}
+	level = 1;
+}
+
+void Board::right_sequence(){
+	digitalWrite(ledPinGreen, LOW);
+	digitalWrite(ledPinYellow, LOW);
+	digitalWrite(ledPinRed, LOW);
+	digitalWrite(ledPinBlue, LOW);
+	sleep(DELAY);
+
+	digitalWrite(ledPinGreen, HIGH);
+	digitalWrite(ledPinYellow, HIGH);
+	digitalWrite(ledPinRed, HIGH);
+	digitalWrite(ledPinBlue, HIGH);
+	sleep(DELAY);
+
+	digitalWrite(ledPinGreen, LOW);
+	digitalWrite(ledPinYellow, LOW);
+	digitalWrite(ledPinRed, LOW);
+	digitalWrite(ledPinBlue, LOW);
+	sleep(DELAY);
+
+	cout<<"je suis la "<<endl;
+
+	if (level < MAX_LEVEL)
+		level++;
+}
+
+void Board::loop(){
+	if (level == 1)
+		generate_sequence();//generate a sequence;
+	if (digitalRead(buttonPinMenu) == HIGH || level != 1){ //If start button is pressed or you're winning
+		cout <<"level :" <<level<<endl;
+		show_sequence();    //show the sequence
+		sleep(2*DELAY); //enlever le fichier on5.txt qui représente le bouton Menu
+		get_sequence();     //wait for your sequence
+	}
+}
+
 
 
 
