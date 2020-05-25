@@ -26,6 +26,11 @@ public:
   virtual void run();
 };
 
+
+
+
+
+
 // exemple d'actionneur digital : une led, ne pas oublier d'heriter de Device
 class DigitalActuatorLED: public Device {
 protected:
@@ -41,6 +46,11 @@ public:
   virtual void run();
 };
 
+
+
+
+
+
 // exemple d'actionneur sur le bus I2C permettant d'echanger des tableaux de caracteres : un ecran, ne pas oublier d'heriter de Device
 class I2CActuatorScreen : public Device{
 protected:
@@ -54,6 +64,13 @@ public:
   // thread representant le capteur et permettant de fonctionner independamment de la board
   virtual void run();
 };
+
+
+
+
+
+
+
 
 // exemple de capteur analogique de luminosté, ne pas oublier d'heriter de Device
 class AnalogSensorLuminosity : public Device{
@@ -73,14 +90,21 @@ public :
 
 
 
+
+
+
+
+
 class ExternalDigitalSensorButton : public Device {
  protected :
   //etat du bouton
   int button_state;
   // temps entre 2 affichage de l etat de la led
   int temps;
+	// nom du fichier correspondant au boutton
+	string textes;
  public :
-  ExternalDigitalSensorButton(int t);
+  ExternalDigitalSensorButton(int t, string texte);
   int updateState();
   virtual void run();
 };

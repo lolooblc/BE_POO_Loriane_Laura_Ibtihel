@@ -6,21 +6,15 @@ int main(){
   // creation d'une board
   Board esp8266;
   // achat des senseurs et actionneurs
-  DigitalActuatorLED led1(DELAY); 
-  DigitalActuatorLED led2(DELAY); 
-  DigitalActuatorLED led3(DELAY); 
-  DigitalActuatorLED led4(DELAY); 
+	DigitalActuatorLED led1(DELAY); 
+	DigitalActuatorLED led2(DELAY); 
+	DigitalActuatorLED led3(DELAY); 
+	DigitalActuatorLED led4(DELAY); 
 
-	ExternalDigitalSensorButton ButtonGreenLED(DELAY);
-	ExternalDigitalSensorButton ButtonYellowLED(DELAY);
-	ExternalDigitalSensorButton ButtonRedLED(DELAY);
-	ExternalDigitalSensorButton ButtonBlueLED(DELAY);
-
-
-#define PIN_GREEN_BUTTON 5 // broche bouton poussoire led verte
-#define PIN_YELLOW_BUTTON 6 // broche bouton poussoire led jaune
-#define PIN_RED_BUTTON 7 // broche bouton poussoire led rouge
-#define PIN_BLUE_BUTTON 8 // broche bouton poussoire led blue
+	ExternalDigitalSensorButton ButtonGreenLED(DELAY, "on1.txt");
+	ExternalDigitalSensorButton ButtonYellowLED(DELAY,"on2.txt");
+	ExternalDigitalSensorButton ButtonRedLED(DELAY,"on3.txt");
+	ExternalDigitalSensorButton ButtonBlueLED(DELAY,"on4.txt");
 
   I2CActuatorScreen screen;
   

@@ -39,13 +39,14 @@ void I2CActuatorScreen::run(){
 //classe ExternalDigitalSensorButton
 
 //constructeur :
-ExternalDigitalSensorButton::ExternalDigitalSensorButton(int t):Device(),button_state(LOW),temps(t){ 
+ExternalDigitalSensorButton::ExternalDigitalSensorButton(int t, string texte):Device(),button_state(LOW),temps(t){
+	textes = texte; 
 } //initialement le bouton est relaché
 
 
 
 int ExternalDigitalSensorButton::updateState() {
-  if(ifstream("on.txt")){ //le fichier existe et l'état passe du bouton passe "on"
+  if(ifstream(textes)){ //le fichier existe et l'état passe du bouton passe "on"
     button_state=1;
   }
   else
@@ -55,10 +56,13 @@ int ExternalDigitalSensorButton::updateState() {
 
 void ExternalDigitalSensorButton::run(){
   while(1){
+		cout <<"texte : "<<textes <<endl;
     if(ptrmem!=NULL)
       *ptrmem=updateState();
-    if (button_state)
+    if (button_state){
       cout << "((((bouton enfoncé))))\n";
+
+		}
     else
       cout << "((((bouton relaché))))\n";
     sleep(temps);

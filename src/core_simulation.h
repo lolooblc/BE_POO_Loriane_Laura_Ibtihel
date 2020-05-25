@@ -14,9 +14,8 @@
 #define I2C_BUFFER_SIZE 1024
 #define MAX_IO_PIN 6
 
-
-#define MAXARRAY 10 // définir la longeur de la sequence
-
+#define MAX_LEVEL 10 //définit la longueur d'une séquence
+ 
 #define piezoPin 13 // Broche piézo
 
 #define PIN_GREEN_BUTTON 5 // broche bouton poussoire led verte
@@ -144,9 +143,11 @@ public:
 		// fonction arduino : demarraeg
   void beginMessage();
 	//fonction de génère un tableau d'entier correspondant aux couleurs
-	void Colors(); 
+	void generate_sequence(); 
 	//fonction affiche les couleurs
-	void giveSignalSequence(int value);
+	void randomSequenceDisplay(int value);
+	//allumerLED
+	void answerLED(int value);
 };
 
 #endif
