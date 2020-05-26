@@ -23,6 +23,8 @@ void Board::setup(){
   pinMode(ledStatePinRed,OUTPUT);
   pinMode(ledStatePinBlue, OUTPUT);
 
+  pinMode(PIN_RED_BUTTON,INPUT);//bouton poussoir LED rouge
+
   pinMode(pinBuzzer,OUTPUT);
 }
 
@@ -40,13 +42,15 @@ void Board::loop(){
   char buf[100];
   //int val;
   //static int cpt=0;
-  static int bascule=0;
-  //int i=0;
+  int state_buttonRed;
+  static int cpt = 0;
+  static int bascule = 0;
+  int i=0;
 
-/*
+
   for(i=0;i<10;i++){
 
-    // lecture sur la pin 1 :
+    /*// lecture sur la pin 1 :
     val=analogRead(1);
     sprintf(buf,"led1 %d",val);
     Serial.println(buf);
@@ -54,24 +58,24 @@ void Board::loop(){
       // tous les 5 fois on affiche sur l ecran la led1
       sprintf(buf,"%d",val);
       bus.write(1,buf,100);
-		}
+		}*/
 
 
-		// lecture sur la pin 2 : capteur de luminosité
-    val=analogRead(2);
-    sprintf(buf,"luminosité %d",val);
+		// lecture sur la pin 4 : Le bouton poussoir associé à la LED reouge
+    state_buttonRed=analogRead(PIN_RED_BUTTON);
+    sprintf(buf,"etat du bouton poussoir LED rouge : %d",state_buttonRed);
     Serial.println(buf);
 
-    if(cpt%5==0){
+    /*if(cpt%5==0){
       // tous les 5 fois on affiche sur l ecran la luminosité
       sprintf(buf,"%d",val);
       bus.write(2,buf,100);
-    }
+    }*/
 
     cpt++;
-		sleep(1);
+    sleep(1);
 
-	}*/
+	}
 
 
 		// on eteint et on allume la LED
@@ -89,7 +93,7 @@ void Board::loop(){
     	sprintf(buf,"led bleue allume");
     	Serial.println(buf);*/
     	digitalWrite(0,HIGH);
-			sleep(DELAY);
+			//sleep(DELAY);
 		}
   	else {
   		/*digitalWrite(ledStatePinGreen,LOW);
@@ -105,7 +109,7 @@ void Board::loop(){
    		sprintf(buf,"led blue eteinte");
     	Serial.println(buf);*/
     	digitalWrite(0,LOW);
-			sleep(DELAY);
+			//sleep(DELAY);
 		}
  	 	bascule=1-bascule;
 

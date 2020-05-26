@@ -1,5 +1,6 @@
 #include <fstream>
 #include "mydevices.h"
+#include <string>
 
 using namespace std;
 
@@ -59,10 +60,28 @@ void I2CActuatorScreen::run(){
 AnalogActuatorBuzzer::AnalogActuatorBuzzer(double f, int t):Device(),frequency(f),temps(t){
 }
 
+int AnalogActuatorBuzzer::updateStateError() {
+  if(ifstream("error.txt")){ // si le fichier d'erreur existe et l'état passe vers "on"
+    state=1;
+  }
+  else
+    state=0;
+  return state;
+}
+
 void AnalogActuatorBuzzer::run(){
-    while(1){
-    sleep(3);
-    cout<<"pin pin"<<endl;
+    int test_error = 0;
+
+    while(test_error==0){
+    if(ptrmem!=NULL)
+    *ptrmem=updateStateError();
+    if (state)
+    {
+    //cout<<"Le buzzer vibre : pin pin"<<endl;
+    cerr<<"Le buzzer vibre : pin pin"<<endl;
+    test_error=1;
+    }
+
     }
 }
 

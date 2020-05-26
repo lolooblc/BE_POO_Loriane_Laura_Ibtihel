@@ -78,10 +78,13 @@ protected:
   double frequency;
   // temps du klaxonnage
   int temps;
+  // erreur ou pas
+  int state;
 
 public:
     // initialisation du temps de rafraichissement et de la fréquence
   AnalogActuatorBuzzer(double frequency,int temps);
+  int updateStateError();
   // thread representant l'actionneur et permettant de fonctionner independamment de la board
   virtual void run();
 };
