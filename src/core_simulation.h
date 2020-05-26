@@ -15,6 +15,7 @@
 #define MAX_IO_PIN 6
 
 #define MAX_LEVEL 10 //définit la longueur d'une séquence
+#define NUMBER_PLAYER 4
  
 #define piezoPin 13 // Broche piézo
 
@@ -84,6 +85,9 @@ public:
 
 // representation generique d'un capteur ou d'un actionneur numerique, analogique ou sur le bue I2C
 class Device{
+private : 
+	//Compteur du nombre de device
+	static int cpt;
 protected:
     // lien avec la carte pour lire/ecrire une valeur
   unsigned short *ptrmem;
@@ -102,6 +106,8 @@ public:
     void setPinMem(unsigned short* ptr,enum typeio *c);
     // lien entre le device I2C et la carte arduino
     void setI2CAddr(int addr, I2C * bus);
+		//fonction qui affiche le nombre de devices
+		static int devicesNumber();
 };
 
 // classe representant une carte arduino
@@ -147,6 +153,7 @@ public:
 	//fonction affiche les couleurs
 	void show_sequence();
 	void get_sequence();
+	void numberPlayers();
 	void wrong_sequence();
 	void right_sequence();
 };

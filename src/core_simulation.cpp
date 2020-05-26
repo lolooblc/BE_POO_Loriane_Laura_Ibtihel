@@ -90,11 +90,14 @@ bool* I2C::getVide(int addr){
 }
 
 // classe generique reprenstant un capteur/actionneur
+int Device :: cpt=0;
+
 Device::Device(){
   ptrtype=NULL;
   ptrmem=NULL;
   i2caddr=-1;
   i2cbus=NULL;
+	cpt++;
 }
 
 void Device::run(){
@@ -113,6 +116,10 @@ void Device::setI2CAddr(int addr, I2C * bus){
   i2caddr=addr;
   i2cbus=bus;
 }
+
+int Device::devicesNumber(){
+	return cpt;
+} 
 
 // classe representant une carte arduino
 void Board::run(){

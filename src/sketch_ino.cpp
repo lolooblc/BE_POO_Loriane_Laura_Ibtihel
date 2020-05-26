@@ -1,7 +1,9 @@
 #include <unistd.h>
 #include <cstdlib>
 #include <ctime>
+#include <vector>
 #include "core_simulation.h"
+#include "joueur.cpp"
 
 // la fonction d'initialisation d'arduino
 void Board::setup(){
@@ -34,6 +36,9 @@ void Board::beginMessage(){
 	digitalWrite(ledPinYellow, LOW);
 	digitalWrite(ledPinRed, LOW);
 	digitalWrite(ledPinBlue, LOW);
+	cout << "Nombre devices branchés: ";
+	cout <<Device::devicesNumber()<<endl;
+
 	sleep(DELAY);
 }
 
@@ -47,6 +52,20 @@ void Board::generate_sequence(){
   for(int i = 0; i < MAX_LEVEL; i++)
     sequence[i] = rand()%(4); //génére des chiffres aleatoire de 0 a 3
                                // 0 = vert, 1 = jaune, 2 = rouge, 3 = blue
+}
+
+void Board::numberPlayers(){
+	unsigned int i=0;
+	vector<Player *> v1;
+	for(i=0; i<NUMBER_PLAYER; i++){
+		v1.push_back(new Player(i,0));
+	}
+
+	for(i=0; i<4; i++)
+		cout << v1[i]->getScore() << " ";
+	cout<<endl;
+
+	sleep(DELAY);
 }
 
 
@@ -100,8 +119,8 @@ void Board::get_sequence() {
 	char buf[100];
 	int flag = 0; //this flag indicates if the sequence is correct
 	for (int i = 0; i < level; i++){
-
-		sprintf(buf,"*******Saississez ********");
+		sleep(DELAY);
+		sprintf(buf,"*************Saississez ***************");
     Serial.println(buf);
 		flag = 0;
 		while(flag == 0){
@@ -110,11 +129,10 @@ void Board::get_sequence() {
 				your_sequence[i] = ledPinGreen;
 				flag = 1;
 				sleep(DELAY);
-				cout << "vertvertvert" << endl;
 				if (your_sequence[i] != (1+sequence[i])){
 					cout << your_sequence[i] <<endl;
 					cout << sequence[i] <<endl;
-					sprintf(buf,"Mauvaise séquence");
+					sprintf(buf,"!!!!!!!!!!!!!!!!!Mauvaise séquence!!!!!!!!!!!!");
    				Serial.println(buf);
 					wrong_sequence();
 					return;
@@ -127,11 +145,10 @@ void Board::get_sequence() {
 				your_sequence[i] = ledPinYellow;
 				flag = 1;
 				sleep(DELAY);
-				cout << "jaunejaunejaune" << endl;
 				if (your_sequence[i] != (1+sequence[i])){
 					cout << your_sequence[i] <<endl;
 					cout << sequence[i] <<endl;
-					sprintf(buf,"Mauvaise séquence");
+					sprintf(buf,"!!!!!!!!!!!!!!Mauvaise séquence!!!!!!!!!!!");
    				Serial.println(buf);
 					wrong_sequence();
 					return;
@@ -144,11 +161,10 @@ void Board::get_sequence() {
 				your_sequence[i] = ledPinRed;
 				flag = 1;
 				sleep(DELAY);
-				cout << "redredred" << endl;
 				if (your_sequence[i] != (1+sequence[i])){
 					cout << your_sequence[i] <<endl;
 					cout << sequence[i] <<endl;
-					sprintf(buf,"Mauvaise séquence");
+					sprintf(buf,"!!!!!!!!!!!!Mauvaise séquence!!!!!!!!!!!!!!!!");
    				Serial.println(buf);
 					wrong_sequence();
 					return;
@@ -159,13 +175,12 @@ void Board::get_sequence() {
 			if (digitalRead(PIN_BLUE_BUTTON) == HIGH){
 				digitalWrite(ledPinBlue, HIGH);
 				your_sequence[i] = ledPinBlue;
-				cout << "bleubleubleu" << endl;
 				flag = 1;
 				sleep(DELAY);
 				if (your_sequence[i] != (1+sequence[i])){
 					cout << your_sequence[i] <<endl;
 					cout << sequence[i] <<endl;
-					sprintf(buf,"Mauvaise séquence");
+					sprintf(buf,"!!!!!!!!!!!!!!!Mauvaise séquence!!!!!!!!!!!!");
    				Serial.println(buf);
 					wrong_sequence();
 					return;
@@ -214,8 +229,6 @@ void Board::right_sequence(){
 	digitalWrite(ledPinBlue, LOW);
 	sleep(DELAY);
 
-	cout<<"je suis la "<<endl;
-
 	if (level < MAX_LEVEL)
 		level++;
 }
@@ -223,6 +236,7 @@ void Board::right_sequence(){
 void Board::loop(){
 	if (level == 1)
 		generate_sequence();//generate a sequence;
+		numberPlayers(); //determine le nombre de joueur 
 	if (digitalRead(buttonPinMenu) == HIGH || level != 1){ //If start button is pressed or you're winning
 		cout <<"level :" <<level<<endl;
 		show_sequence();    //show the sequence
