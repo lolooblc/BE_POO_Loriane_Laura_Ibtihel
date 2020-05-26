@@ -24,6 +24,8 @@
 #define buttonPinYellow 6 // broche bouton poussoire led jaune
 #define buttonPinBlue 7 // broche bouton poussoire led bleu
 
+#define PIN_RED_BUTTON 4 // test bouton
+
 #define buttonPinMenu 8 //broche bouton poussoire menu
 
 #define pinBuzzer 5

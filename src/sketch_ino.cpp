@@ -76,7 +76,7 @@ void Board::loop(){
 
 		// on eteint et on allume la LED
   	if(bascule) {
-    	digitalWrite(ledStatePinGreen,HIGH);
+    	/*digitalWrite(ledStatePinGreen,HIGH);
     	sprintf(buf,"led verte allume");
     	Serial.println(buf);
     	digitalWrite(ledStatePinYellow,HIGH);
@@ -87,11 +87,12 @@ void Board::loop(){
     	Serial.println(buf);
    	 	digitalWrite(ledStatePinBlue,HIGH);
     	sprintf(buf,"led bleue allume");
-    	Serial.println(buf);
+    	Serial.println(buf);*/
+    	digitalWrite(0,HIGH);
 			sleep(DELAY);
 		}
   	else {
-  		digitalWrite(ledStatePinGreen,LOW);
+  		/*digitalWrite(ledStatePinGreen,LOW);
    		sprintf(buf,"led verte eteinte");
     	Serial.println(buf);
    		digitalWrite(ledStatePinYellow,LOW);
@@ -102,7 +103,8 @@ void Board::loop(){
     	Serial.println(buf);
    		digitalWrite(ledStatePinBlue,LOW);
    		sprintf(buf,"led blue eteinte");
-    	Serial.println(buf);
+    	Serial.println(buf);*/
+    	digitalWrite(0,LOW);
 			sleep(DELAY);
 		}
  	 	bascule=1-bascule;

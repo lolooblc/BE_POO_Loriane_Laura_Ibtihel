@@ -10,6 +10,7 @@ int main(){
   DigitalActuatorLED led2(DELAY);
   DigitalActuatorLED led3(DELAY);
   DigitalActuatorLED led4(DELAY);
+  ExternalDigitalSensorButton ButtonRedLED(DELAY);
   I2CActuatorScreen screen;
   AnalogActuatorBuzzer buzzer(FREQ,DELAY);
 
@@ -20,6 +21,8 @@ int main(){
   esp8266.pin(ledStatePinYellow,led2);
   esp8266.pin(ledStatePinRed,led3);
   esp8266.pin(ledStatePinBlue,led4);
+
+  esp8266.pin(4,ButtonRedLED); //PIN_RED_BUTTON
 
   esp8266.pin(pinBuzzer,buzzer);
 
