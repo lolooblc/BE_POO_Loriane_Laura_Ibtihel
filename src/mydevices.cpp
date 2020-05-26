@@ -1,32 +1,11 @@
 #include <fstream>
 #include "mydevices.h"
-#include <string>
 
 using namespace std;
 
-//variable globale luminosite environnement
-//static volatile int lumiosite_environnement = 200;
-
-/*
-//classe AnalogSensorTemperature
-AnalogSensorTemperature::AnalogSensorTemperature(int d,int  t):Device(),val(t),temps(d){
-  alea=1;
-}
-
-
-void AnalogSensorTemperature::run(){
-  while(1){
-    alea=1-alea;
-    if(ptrmem!=NULL)
-      *ptrmem=val+alea;
-    sleep(temps);
-  }
-}
-
-*/
-
 //classe DigitalActuatorLED
-DigitalActuatorLED::DigitalActuatorLED(int t):Device(),state(LOW),temps(t){
+DigitalActuatorLED::DigitalActuatorLED(int t, string nomLed):Device(),state(LOW),temps(t){
+	nomLeds = nomLed;
 }
 
 void DigitalActuatorLED::run(){
@@ -34,10 +13,10 @@ void DigitalActuatorLED::run(){
     if(ptrmem!=NULL)
       state=*ptrmem;
     if (state==LOW){
-      cout << "((((eteint))))\n";
+      cout <<"(((( " <<nomLeds <<" eteint))))\n";
 		}
     else {
-    	cout << "((((allume))))\n";
+    	cout <<"(((( " <<nomLeds <<" allume))))\n";
 		}
     sleep(temps);
 	}
@@ -57,43 +36,18 @@ void I2CActuatorScreen::run(){
     }
 }
 
-AnalogActuatorBuzzer::AnalogActuatorBuzzer(double f, int t):Device(),frequency(f),temps(t){
-}
-
-int AnalogActuatorBuzzer::updateStateError() {
-  if(ifstream("error.txt")){ // si le fichier d'erreur existe et l'état passe vers "on"
-    state=1;
-  }
-  else
-    state=0;
-  return state;
-}
-
-void AnalogActuatorBuzzer::run(){
-    int test_error = 0;
-
-    while(test_error==0){
-    if(ptrmem!=NULL)
-    *ptrmem=updateStateError();
-    if (state)
-    {
-    //cout<<"Le buzzer vibre : pin pin"<<endl;
-    cerr<<"Le buzzer vibre : pin pin"<<endl;
-    test_error=1;
-    }
-
-    }
-}
 
 //classe ExternalDigitalSensorButton
 
 //constructeur :
-ExternalDigitalSensorButton::ExternalDigitalSensorButton(int t):Device(),button_state(LOW),temps(t){
+ExternalDigitalSensorButton::ExternalDigitalSensorButton(int t, string texte):Device(),button_state(LOW),temps(t){
+	textes = texte;
 } //initialement le bouton est relaché
 
 
+
 int ExternalDigitalSensorButton::updateState() {
-  if(ifstream("on.txt")){ //le fichier existe et l'état passe du bouton passe "on"
+  if(ifstream(textes)){ //le fichier existe et l'état passe du bouton passe "on"
     button_state=1;
   }
   else
@@ -105,26 +59,41 @@ void ExternalDigitalSensorButton::run(){
   while(1){
     if(ptrmem!=NULL)
       *ptrmem=updateState();
-    if (button_state)
+    if (button_state){
       cout << "((((bouton enfoncé))))\n";
+
+		}
     else
       cout << "((((bouton relaché))))\n";
     sleep(temps);
   }
 }
 
-/*
-//classe AnalogSensorLuminosity
-AnalogSensorLuminosity::AnalogSensorLuminosity(int t):Device(),temps(t){
-  alea=1;
+
+AnalogActuatorBuzzer::AnalogActuatorBuzzer(double f, int t):Device(),delay_value(f),beeplong(t){
 }
 
-void AnalogSensorLuminosity::run(){
-  while(1){
-    alea=1-alea;
-    if(ptrmem!=NULL)
-      *ptrmem=lumiosite_environnement+alea;
-    sleep(temps);
+int AnalogActuatorBuzzer::writeError() {
+int test_error = 0;
+  if(ifstream("error.txt")){ // si le fichier d'erreur existe et l'état passe vers "on"
+    test_error = 1;
+    remove("error.txt");
   }
+  return test_error;
 }
-*/
+
+void AnalogActuatorBuzzer::run(){
+    int test_error = 0;
+
+    while(test_error==0){
+    if(ptrmem!=NULL)
+    *ptrmem=writeError();
+    if (test_error==1)
+    {
+    cerr<<"Le buzzeur vibre : mauvaise sequence"<<endl;
+    test_error=0;
+    }
+
+    }
+
+}

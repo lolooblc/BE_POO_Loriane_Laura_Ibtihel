@@ -1,29 +1,13 @@
 #ifndef MYDEVICES_H
 #define MYDEVICES_H
 
+
 #include <iostream>
 #include <thread>
 #include <unistd.h>
 #include <string.h>
 #include "core_simulation.h"
 
-
-// exemple de capteur analogique de temperature, ne pas oublier d'heriter de Device
-class AnalogSensorTemperature: public Device {
-private:
-  // fait osciller la valeur du cpateur de 1
-  int alea;
-  // valeur de temperature mesuree
-  int val;
-  // temps entre 2 prises de valeurs
-  int temps;
-
-public:
-  //constructeur ne pas oublier d'initialiser la classe mere
-  AnalogSensorTemperature(int d,int  t);
-  // thread representant le capteur et permettant de fonctionner independamment de la board
-  virtual void run();
-};
 
 // exemple d'actionneur digital : une led, ne pas oublier d'heriter de Device
 class DigitalActuatorLED: public Device {
@@ -33,12 +17,19 @@ protected:
   // temps entre 2 affichage de l etat de la led
   int temps;
 
+	string nomLeds;
+
 public:
     // initialisation du temps de rafraichissement
-  DigitalActuatorLED(int t);
+  DigitalActuatorLED(int t, string nomLed);
   // thread representant l'actionneur et permettant de fonctionner independamment de la board
   virtual void run();
 };
+
+
+
+
+
 
 // exemple d'actionneur sur le bus I2C permettant d'echanger des tableaux de caracteres : un ecran, ne pas oublier d'heriter de Device
 class I2CActuatorScreen : public Device{
@@ -54,40 +45,7 @@ public:
   virtual void run();
 };
 
-// exemple de capteur analogique de luminosté, ne pas oublier d'heriter de Device
-class AnalogSensorLuminosity : public Device{
-private:
-  // fait osciller la valeur du capteur de 1
-  int alea;
-  // temps entre 2 prises de valeurs
-  int temps;
-	int val;
 
-
-public :
-  //constructeur ne pas oublier d'initialiser la classe mere
-	AnalogSensorLuminosity(int d);
-  // thread representant le capteur et permettant de fonctionner independamment de la board
-  virtual void run();
-};
-
-// exemple d'actionneur analogue : un buzzeur, ne pas oublier d'heriter de Device
-class AnalogActuatorBuzzer: public Device {
-protected:
-  // fréquence du buzzeur
-  double frequency;
-  // temps du klaxonnage
-  int temps;
-  // erreur ou pas
-  int state;
-
-public:
-    // initialisation du temps de rafraichissement et de la fréquence
-  AnalogActuatorBuzzer(double frequency,int temps);
-  int updateStateError();
-  // thread representant l'actionneur et permettant de fonctionner independamment de la board
-  virtual void run();
-};
 
 class ExternalDigitalSensorButton : public Device {
  protected :
@@ -95,11 +53,29 @@ class ExternalDigitalSensorButton : public Device {
   int button_state;
   // temps entre 2 affichage de l etat de la led
   int temps;
+	// nom du fichier correspondant au boutton
+	string textes;
  public :
-  ExternalDigitalSensorButton(int t);
+  ExternalDigitalSensorButton(int t, string texte);
   int updateState();
   virtual void run();
 };
 
+// exemple d'actionneur analogue : un buzzeur, ne pas oublier d'heriter de Device
+class AnalogActuatorBuzzer: public Device {
+protected:
+  // fréquence du buzzeur
+  double delay_value;
+  // temps du klaxonnage
+  int beeplong;
+  // erreur ou pas
+  //int state;
 
+public:
+    // initialisation du temps de rafraichissement et de la fréquence
+  AnalogActuatorBuzzer(double delay_value,int beeplong);
+   int writeError();
+  // thread representant l'actionneur et permettant de fonctionner independamment de la board
+  virtual void run();
+};
 #endif

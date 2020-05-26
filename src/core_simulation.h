@@ -6,8 +6,8 @@
 #include <thread>
 #include <mutex>
 
-#define DELAY 5
-#define FREQ 1000
+#define DELAY 3
+#define BEEP 4
 #define TEMP 22
 #define HIGH 1
 #define LOW 0
@@ -15,26 +15,23 @@
 #define I2C_BUFFER_SIZE 1024
 #define MAX_IO_PIN 6
 
-
-#define MAXARRAY 10 // définir la longeur de la sequence
+#define MAX_LEVEL 10 //définit la longueur d'une séquence
 
 #define piezoPin 13 // Broche piézo
-#define buttonPinRed 4 // broche bouton poussoire led rouge
-#define buttonPinGreen 5 // broche bouton poussoire led vert
-#define buttonPinYellow 6 // broche bouton poussoire led jaune
-#define buttonPinBlue 7 // broche bouton poussoire led bleu
 
-#define PIN_RED_BUTTON 4 // test bouton
+#define PIN_GREEN_BUTTON 5 // broche bouton poussoire led verte
+#define PIN_YELLOW_BUTTON 6 // broche bouton poussoire led jaune
+#define PIN_RED_BUTTON 7 // broche bouton poussoire led rouge
+#define PIN_BLUE_BUTTON 8 // broche bouton poussoire led blue
 
 #define buttonPinMenu 8 //broche bouton poussoire menu
 
-#define pinBuzzer 5
+#define ledPinGreen 1 // led d' etat verte
+#define ledPinYellow 2 // led d' etat jaune
+#define ledPinRed 3 // led d' etat rouge
+#define ledPinBlue 4 // led d' etat bleu
 
-#define ledStatePinGreen 0 // led d' etat verte
-#define ledStatePinYellow 1 // led d' etat jaune
-#define ledStatePinRed 2 // led d' etat rouge
-#define ledStatePinBlue 3 // led d' etat bleu
-
+#define pinBuzzer 9
 
 using namespace std;
 
@@ -147,8 +144,18 @@ public:
   void loop();
 		// fonction arduino : demarraeg
   void beginMessage();
+	//fonction de génère un tableau d'entier correspondant aux couleurs
+	void generate_sequence();
+	//fonction affiche les couleurs
+	void show_sequence();
+	void get_sequence();
+	void wrong_sequence();
+	void right_sequence();
 };
 
 #endif
+
+
+
 
 
