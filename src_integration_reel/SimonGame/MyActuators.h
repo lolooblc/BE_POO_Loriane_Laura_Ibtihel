@@ -10,6 +10,7 @@ class Actuators : public Devices {
   public:
     Actuators(int pin);
     virtual void WhoAmI();
+    //Write high or low in the pin's actuator
     virtual void Write(int HoL); //in argument : HIGH or LOW, means 1 or 0
 };
 
@@ -28,7 +29,7 @@ class DigitalActuatorLED : public Actuators{
 class DigitalActuatorBuzzer : public Actuators{
   protected :
     double delay_value;
-    //durée pendant laquelle le buzzer vibrera (en nb d'itérations)
+    //time of buzzer's vibration (in nb of iterations)
     int beeplong;
    public:
     DigitalActuatorBuzzer(int pin, double delay_value);

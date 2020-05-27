@@ -10,6 +10,7 @@ class Sensors : public Devices {
   public:
     Sensors(int pin);
     virtual void WhoAmI();
+    //read the sensor's state
     virtual int GetState(); 
 };
 
@@ -17,7 +18,6 @@ class Sensors : public Devices {
 //----------class for pushbutton------------------
 class ExternalDigitalSensorButton : public Sensors {
   int pin;
-  //TODO : Besoin de redéfinir les variables ou hérédité les récupères ?
   public:
     ExternalDigitalSensorButton(int mypin);
     void WhoAmI();

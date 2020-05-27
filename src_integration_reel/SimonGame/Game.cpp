@@ -5,7 +5,6 @@
 LiquidCrystal lcd(rs, en, d4, d5, d6, d7);
 
 //Creation and initialisation of all the sensors
-//LCDscreen MyLCD(rs, en, d4, d5, d6, d7);
 DigitalActuatorLED red_LED(pinLR);
 DigitalActuatorLED blue_LED(pinLB);
 DigitalActuatorLED green_LED(pinLG);
@@ -16,7 +15,7 @@ ExternalDigitalSensorButton green_button(pinBG);
 ExternalDigitalSensorButton yellow_button(pinBY);
 ExternalDigitalSensorButton menu_button(pinBMENU);
 
-//all nedeed noises
+//create all nedeed noises
 DigitalActuatorBuzzer buzzer_sonOK(pinBuzzer, 0.5);
 DigitalActuatorBuzzer buzzer_sonNOK(pinBuzzer, 5);
 DigitalActuatorBuzzer buzzer_sonR(pinBuzzer, 1.0);
@@ -25,6 +24,7 @@ DigitalActuatorBuzzer buzzer_sonG(pinBuzzer, 3.0);
 DigitalActuatorBuzzer buzzer_sonY(pinBuzzer, 4.0);
 
 
+//constructor
 Game::Game(){
   velocity = 500;
   error_spot = -1;
@@ -40,7 +40,7 @@ Game::Game(){
 const int Game::MAX_LEVEL=25;
 int Game::level=1;
 
-
+//generate a random sequence of number of pins (among the LED pins)
 int * Game::generate_sequence(){
   randomSeed(millis());
   static int sequence[MAX_LEVEL];
@@ -51,7 +51,7 @@ int * Game::generate_sequence(){
 }
 
 
-
+//make the 4 LED flash 3 times, emet a noise and display "GAME OVER"
 void Game::wrong_sequence(){
   lcd.begin(16,2);
   lcd.print("GAME OVER");
@@ -74,7 +74,7 @@ void Game::wrong_sequence(){
   error_spot=-1;
 }
 
-
+//make the 4 LED flash once, emet a noise and display "WELL DONE!"
 void Game::right_sequence(){
   lcd.begin(16,2);
   lcd.print("WELL DONE!");
@@ -100,7 +100,7 @@ void Game::right_sequence(){
   }
 }
 
-
+//light the LED in the sequence order, the lengh of the shown sequence correspond to the current level
 void Game::show_sequence(int *sequence){
   lcd.noDisplay();
   red_LED.Write(0);
@@ -129,7 +129,7 @@ void Game::show_sequence(int *sequence){
 }
 
 
-
+//Compare which sequence the user is making
 void Game::get_sequence(int *sequence){
   int your_sequence[MAX_LEVEL];
   int flag = 0; //this flag indicates if the sequence is correct
@@ -194,7 +194,7 @@ void Game::get_sequence(int *sequence){
   right_sequence();
 }
 
-
+//not used and not finished yet :
 int Game::choose_nb_of_players(){
   int nb_players = 1;
  
@@ -202,10 +202,14 @@ int Game::choose_nb_of_players(){
   return nb_players;
 }
 
+//For tests---------------
+
+//return the current level
 int Game::GetLevel(){
   return level;
 }
 
+//light the LED when the button is pressed
 void Game::test_boutons(){
    if (digitalRead(pinBR) == 1){ //red_button.GetState()
         red_LED.Write(1);

@@ -6,6 +6,7 @@ class Devices {
 		static int nbDevices;
 	public:
 	Devices();
+  //print the nature of the device
 	virtual void WhoAmI();
 };
 
