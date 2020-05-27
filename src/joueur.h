@@ -8,22 +8,13 @@ private :
 	int id;
 
 public :
-	Player(){
-		id = 0;
-		score = 0;
-	};
-	Player(int id1, int score1){
-		id = id1;
-		score = score1;
-	};
-	int getID(){
-		return id;
-	};
-	int getScore(){
-		return score;
-	};
+	Player();
+
+	Player(int id1, int score1);
+
+	int getID();
+
+	int getScore();
 	
-	void Score(){
-		score++;
-	};
+	void Score();
 };

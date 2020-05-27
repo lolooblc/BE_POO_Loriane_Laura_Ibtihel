@@ -55,7 +55,7 @@ vector<Player *> v1;
 
 void Board::setUpListe(){
 		unsigned int i=0;
-		for(i=0; i<NUMBER_PLAYER; i++){
+		for(i=0; i<(NUMBER_PLAYER+1); i++){
 			v1.push_back(new Player(i,0));
 		}
 }
@@ -128,8 +128,6 @@ void Board::get_sequence() {
 				flag = 1;
 				sleep(DELAY);
 				if (your_sequence[i] != (1+sequence[i])){
-					cout << your_sequence[i] <<endl;
-					cout << sequence[i] <<endl;
 					sprintf(buf,"!!!!!!!!!!!!!!!!!Mauvaise séquence!!!!!!!!!!!!");
    				Serial.println(buf);
 					wrong_sequence();
@@ -144,8 +142,6 @@ void Board::get_sequence() {
 				flag = 1;
 				sleep(DELAY);
 				if (your_sequence[i] != (1+sequence[i])){
-					cout << your_sequence[i] <<endl;
-					cout << sequence[i] <<endl;
 					sprintf(buf,"!!!!!!!!!!!!!!Mauvaise séquence!!!!!!!!!!!");
    				Serial.println(buf);
 					wrong_sequence();
@@ -160,8 +156,6 @@ void Board::get_sequence() {
 				flag = 1;
 				sleep(DELAY);
 				if (your_sequence[i] != (1+sequence[i])){
-					cout << your_sequence[i] <<endl;
-					cout << sequence[i] <<endl;
 					sprintf(buf,"!!!!!!!!!!!!Mauvaise séquence!!!!!!!!!!!!!!!!");
    				Serial.println(buf);
 					wrong_sequence();
@@ -176,8 +170,6 @@ void Board::get_sequence() {
 				flag = 1;
 				sleep(DELAY);
 				if (your_sequence[i] != (1+sequence[i])){
-					cout << your_sequence[i] <<endl;
-					cout << sequence[i] <<endl;
 					sprintf(buf,"!!!!!!!!!!!!!!!Mauvaise séquence!!!!!!!!!!!!");
    				Serial.println(buf);
 					wrong_sequence();

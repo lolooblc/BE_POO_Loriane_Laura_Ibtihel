@@ -15,7 +15,7 @@
 #define MAX_IO_PIN 6
 
 #define MAX_LEVEL 10 //définit la longueur d'une séquence
-#define NUMBER_PLAYER 4
+#define NUMBER_PLAYER 2
  
 #define piezoPin 13 // Broche piézo
 
