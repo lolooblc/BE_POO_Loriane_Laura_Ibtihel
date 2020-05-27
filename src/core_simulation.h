@@ -156,7 +156,6 @@ public:
 	void get_sequence();
 	void wrong_sequence();
 	void right_sequence();
-	void gameOver();
 };
 
 #endif

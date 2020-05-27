@@ -127,7 +127,7 @@ void Board::run(){
     setup();
 		setUpListe();
 		beginMessage();
-    while(1) loop();
+    while(1)	loop();
   }
   catch(BoardException e){
     cout <<"exception: "<<e.get() <<endl;

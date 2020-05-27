@@ -179,7 +179,7 @@ void Board::get_sequence() {
 			}
 		}
 	}
-	sprintf(buf,"Bonne séquence");
+	sprintf(buf,"!!!!!!!!!!!! Bonne séquence !!!!!!!!!!!!!!!!!!!");
 	Serial.println(buf);
 	right_sequence();
 }
@@ -199,6 +199,7 @@ void Board::wrong_sequence(){
 	}
 	level = 1;
 	stop = 1;
+	cout <<"Pour passer au prochain joueur appuyer sur menu"<<endl;
 	
 }
 
@@ -229,19 +230,20 @@ void Board::right_sequence(){
 
 void Board::loop(){
 	if (level == 1){
-		generate_sequence();//generate a sequence;
+		generate_sequence();//génère la sequence;
 	}
 	if (stop == 1){
 			id ++;
 			stop = 0;
 	}
-	if (digitalRead(buttonPinMenu) == HIGH || level != 1){ //If start button is pressed or you're winning
-		cout << "C'est au tour du joueur :" <<v1[id]->getID() << endl;
-		show_sequence();    //show the sequence
-		sleep(DELAY); //enlever le fichier on5.txt qui représente le bouton Menu
-		get_sequence();     //wait for your sequence
-		v1[id]->Score();
-		cout << "Ton score est de : " << v1[id]->getScore() << endl;
+	if (digitalRead(buttonPinMenu) == HIGH || level != 1){ //Si le bouton menu est appuyé ou si le joueur a gagné
+		cout << "C'est au tour du joueur :" <<v1[id]->getID() << endl; //affiche le tour du joueur
+		show_sequence();    //Montre la séquence
+		sleep(DELAY); //enlever le bouton Menu
+		get_sequence();     //attend que le joueur saissise sa séquence 
+		v1[id]->Score();	//incrémente le score
+		cout<<endl;
+		cout << "Ton score est de : " << v1[id]->getScore() << endl; //affiche le score du joueur 
 	}
 }
 

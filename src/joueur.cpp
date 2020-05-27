@@ -13,6 +13,8 @@ Player::Player(int id1, int score1){
 		score = score1;
 }
 
+Player::~Player(){}
+
 int Player::getID(){
 	return id;
 }

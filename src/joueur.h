@@ -10,6 +10,8 @@ private :
 public :
 	Player();
 
+	virtual ~Player();
+
 	Player(int id1, int score1);
 
 	int getID();
