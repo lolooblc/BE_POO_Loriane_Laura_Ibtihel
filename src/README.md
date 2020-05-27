@@ -1,5 +1,8 @@
-# SimonGame
-Simon says game with Arduino
+# BE_Board
+
+
+Simon GAME
+
 
 /////////////////////////// Composants nécessaires : ////////////////////////////////
 	Ecran LCD
@@ -8,12 +11,7 @@ Simon says game with Arduino
 	Carte arduino uno
 	buzzer piézoélectrique 
 
-/////////////////////////// Spécifications branchement //////////////////////////////////
-Les numéros des pins sont définis dans le header file Game.h.
-Il est possible de les modifier mais il faut que les pin définies soient les mêmes que celles banchées en réel.
-
-
-/////////////////////////// Cahier des charges (Identique au simulateur) ///////////////////////////
+/////////////////////////// Cahier des charges : (Simulateur) ///////////////////////////
 
 Au démarrage, l’écran LCD affiche un message de démarrage.
 
@@ -31,18 +29,16 @@ Au fur et à mesure l’écran LCD affiche le score du joueur (+1 à chaque nouv
 
 1 classe Device
 	1 classe Sensor 
-        1 classe Bouton Poussoir
 	1 classe Actuator 
-	    1 classe LED
-	    1 Classe Ecran
-	    1 classe buzzer
+	1 classe Bouton Poussoir
+	1 classe LED
+	1 Classe Ecran
+	1 classe buzzer
 
 1 classe joueur
 
 /////////////////////////// Amélioration ///////////////////////////
-Le mode multijoueur n'a pas encore été implementé. Les fichiers player.h et 
-player.cpp sont encore vide.
 
-Petit soucis du côté de la classe Ecran (LCDscreen) qui présente un soucis
-de conversion d'arguments entre la classe LiquidCrystal d'arduino et notre
-fonction Display. 
+Lorsqu'on arrive au nombre maximum de joueur, le programme s'arrête. Il faudrait qu'on retourne au premier joueur. 
+
+
