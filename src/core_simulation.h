@@ -14,6 +14,24 @@
 #define I2C_BUFFER_SIZE 1024
 #define MAX_IO_PIN 6
 
+#define MAX_LEVEL 10 //définit la longueur d'une séquence
+#define NUMBER_PLAYER 2
+
+#define PIN_GREEN_BUTTON 5 // broche bouton poussoire led verte
+#define PIN_YELLOW_BUTTON 6 // broche bouton poussoire led jaune
+#define PIN_RED_BUTTON 7 // broche bouton poussoire led rouge
+#define PIN_BLUE_BUTTON 8 // broche bouton poussoire led blue
+
+#define buttonPinMenu 8 //broche bouton poussoire menu
+
+#define ledPinGreen 1 // led d' etat verte
+#define ledPinYellow 2 // led d' etat jaune
+#define ledPinRed 3 // led d' etat rouge
+#define ledPinBlue 4 // led d' etat bleu
+
+#define pinBuzzer 9
+#define BEEP 4
+
 using namespace std;
 
 enum typeio {OUTPUT, INPUT};
@@ -67,62 +85,80 @@ public:
 
 // representation generique d'un capteur ou d'un actionneur numerique, analogique ou sur le bue I2C
 class Device{
+private : 
+	//Compteur du nombre de device
+	static int cpt;
 protected:
-    // lien avec la carte pour lire/ecrire une valeur
-  unsigned short *ptrmem;
-    // lien avec la carte pour savoir si c'est une pin en entree ou en sortie
-  enum typeio *ptrtype;
-    // numero sur le bus i2c
-  int i2caddr;
-    // lien sur l'objet representant le bus I2C
-  I2C *i2cbus;
+	// lien avec la carte pour lire/ecrire une valeur
+	unsigned short *ptrmem;
+	// lien avec la carte pour savoir si c'est une pin en entree ou en sortie
+	enum typeio *ptrtype;
+	// numero sur le bus i2c
+	int i2caddr;
+	// lien sur l'objet representant le bus I2C
+	I2C *i2cbus;
 public:
-    // constructeur initialisant le minimum
-    Device();
-    // boucle simulant l'equipement
-    virtual void run();
-    // lien entre le device et la carte arduino
-    void setPinMem(unsigned short* ptr,enum typeio *c);
-    // lien entre le device I2C et la carte arduino
-    void setI2CAddr(int addr, I2C * bus);
+	// constructeur initialisant le minimum
+	Device();
+	// boucle simulant l'equipement
+	virtual void run();
+	// lien entre le device et la carte arduino
+	void setPinMem(unsigned short* ptr,enum typeio *c);
+	// lien entre le device I2C et la carte arduino
+	void setI2CAddr(int addr, I2C * bus);
+	//fonction qui affiche le nombre de devices
+	static int devicesNumber();
 };
 
 // classe representant une carte arduino
 class Board{
 public:
- // valeur sur les pin
-  unsigned short io[MAX_IO_PIN];
-    // pin d'entree ou de sortie
-  enum typeio stateio[MAX_IO_PIN];
-    // threads representant chaque senseur/actionneur sur le pins analogique et digitale
-  thread *tabthreadpin[MAX_IO_PIN];
-    // representation du bus I2C
-  I2C bus;
-    // representation de la liaison terminal
-  Terminal Serial;
-    // threads representant chaque senseur/actionneur sur le bus I2C
-  thread *tabthreadbus[MAX_I2C_DEVICES];
+	// valeur sur les pin
+	unsigned short io[MAX_IO_PIN];
+	// pin d'entree ou de sortie
+	enum typeio stateio[MAX_IO_PIN];
+	// threads representant chaque senseur/actionneur sur le pins analogique et digitale
+	thread *tabthreadpin[MAX_IO_PIN];
+	// representation du bus I2C
+	I2C bus;
+	// representation de la liaison terminal
+	Terminal Serial;
+	// threads representant chaque senseur/actionneur sur le bus I2C
+	thread *tabthreadbus[MAX_I2C_DEVICES];
     
-// simulation de la boucle de controle arduino
-    void run();
-  // accroachage d'un senseur/actionneur à une pin
-    void pin(int p, Device& s);
-    // accroachage d'un senseur/actionneur à une adresse du bus I2C
-      void i2c(int addr,Device& dev);
- // fonction arduino : configuration d'une pin en entree ou en sortie
-    void pinMode(int p,enum typeio t);
-  // fonction arduino : ecriture HIGH ou LOW sur une pin
-    void digitalWrite(int i, int l);
-    // fonction arduino : lecture digital sur une pin
-    int digitalRead(int i);
-     // fonction arduino : lecture analogique sur une pin
-    void analogWrite(int i, int l);
-   // fonction arduino : ecriture analogique sur une pin
-    int analogRead(int i);
-  // fonction arduino : initialisation de la carte arduino
-  void setup();
-    // fonction arduino : boucle de controle de la carte arduino
-  void loop();
+	// simulation de la boucle de controle arduino
+	void run();
+	// accroachage d'un senseur/actionneur à une pin
+	void pin(int p, Device& s);
+	// accroachage d'un senseur/actionneur à une adresse du bus I2C
+	void i2c(int addr,Device& dev);
+	// fonction arduino : configuration d'une pin en entree ou en sortie
+	void pinMode(int p,enum typeio t);
+	// fonction arduino : ecriture HIGH ou LOW sur une pin
+	void digitalWrite(int i, int l);
+	// fonction arduino : lecture digital sur une pin
+	int digitalRead(int i);
+	// fonction arduino : lecture analogique sur une pin
+	void analogWrite(int i, int l);
+	// fonction arduino : ecriture analogique sur une pin
+ 	int analogRead(int i);
+	// fonction arduino : initialisation de la carte arduino
+	void setup();
+	void setUpListe();
+	// fonction arduino : boucle de controle de la carte arduino
+	void loop();
+	// fonction arduino : demarraeg
+	void beginMessage();
+	//fonction de génère un tableau d'entier correspondant aux couleurs
+	void generate_sequence(); 
+	//fonction affiche les couleurs
+	void show_sequence();
+	//Recupère la séquence du joueur
+	void get_sequence();
+	//Si le joueur se trompe
+	void wrong_sequence();
+	//Si le joueur a juste
+	void right_sequence();
 };
 
 #endif

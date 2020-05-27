@@ -1,4 +1,3 @@
-
 #include <thread>
 #include <unistd.h>
 #include <string.h>
@@ -90,11 +89,14 @@ bool* I2C::getVide(int addr){
 }
 
 // classe generique reprenstant un capteur/actionneur
+int Device :: cpt=0;
+
 Device::Device(){
   ptrtype=NULL;
   ptrmem=NULL;
   i2caddr=-1;
   i2cbus=NULL;
+	cpt++;
 }
 
 void Device::run(){
@@ -114,11 +116,17 @@ void Device::setI2CAddr(int addr, I2C * bus){
   i2cbus=bus;
 }
 
+int Device::devicesNumber(){
+	return cpt;
+} 
+
 // classe representant une carte arduino
 void Board::run(){
   try{
     setup();
-    while(1) loop();
+		setUpListe();
+		beginMessage();
+    while(1)	loop();
   }
   catch(BoardException e){
     cout <<"exception: "<<e.get() <<endl;
