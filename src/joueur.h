@@ -24,6 +24,7 @@ public :
 	};
 	
 	void Score(){
+		cout<<"je suisla"<<endl;
 		score++;
 	};
 };

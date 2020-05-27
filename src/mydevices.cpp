@@ -18,10 +18,10 @@ void DigitalActuatorLED::run(){
     if(ptrmem!=NULL)
       state=*ptrmem;
     if (state==LOW){
-      cout <<"(((( " <<nomLeds <<" eteint))))\n";
+      //cout <<"(((( " <<nomLeds <<" eteint))))\n";
 		}
     else {
-    	cout <<"(((( " <<nomLeds <<" allume))))\n";
+    	//cout <<"(((( " <<nomLeds <<" allume))))\n";
 		}
     sleep(temps);
 	}

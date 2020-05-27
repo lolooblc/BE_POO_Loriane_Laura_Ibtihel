@@ -144,6 +144,7 @@ public:
     int analogRead(int i);
   // fonction arduino : initialisation de la carte arduino
   void setup();
+	void setUpListe();
     // fonction arduino : boucle de controle de la carte arduino
   void loop();
 		// fonction arduino : demarraeg
@@ -153,9 +154,9 @@ public:
 	//fonction affiche les couleurs
 	void show_sequence();
 	void get_sequence();
-	void numberPlayers();
 	void wrong_sequence();
 	void right_sequence();
+	void gameOver();
 };
 
 #endif

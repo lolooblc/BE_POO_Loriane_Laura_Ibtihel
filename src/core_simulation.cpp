@@ -125,6 +125,7 @@ int Device::devicesNumber(){
 void Board::run(){
   try{
     setup();
+		setUpListe();
 		beginMessage();
     while(1) loop();
   }

@@ -48,26 +48,22 @@ int sequence[MAX_LEVEL]; // contient la suite de chiffres pour les couleurs a af
 int your_sequence[MAX_LEVEL];
 int level = 1;
 
+vector<Player *> v1;
+
+
+void Board::setUpListe(){
+		unsigned int i=0;
+		for(i=0; i<NUMBER_PLAYER; i++){
+			v1.push_back(new Player(i,0));
+		}
+}
+
+
 void Board::generate_sequence(){
   for(int i = 0; i < MAX_LEVEL; i++)
     sequence[i] = rand()%(4); //génére des chiffres aleatoire de 0 a 3
                                // 0 = vert, 1 = jaune, 2 = rouge, 3 = blue
 }
-
-void Board::numberPlayers(){
-	unsigned int i=0;
-	vector<Player *> v1;
-	for(i=0; i<NUMBER_PLAYER; i++){
-		v1.push_back(new Player(i,0));
-	}
-
-	for(i=0; i<4; i++)
-		cout << v1[i]->getScore() << " ";
-	cout<<endl;
-
-	sleep(DELAY);
-}
-
 
 void Board::show_sequence(){
 	char buf[100];
@@ -208,6 +204,7 @@ void Board::wrong_sequence(){
 		sleep(DELAY);;
 	}
 	level = 1;
+	
 }
 
 void Board::right_sequence(){
@@ -233,15 +230,19 @@ void Board::right_sequence(){
 		level++;
 }
 
+
+
 void Board::loop(){
-	if (level == 1)
+	if (level == 1){
 		generate_sequence();//generate a sequence;
-		numberPlayers(); //determine le nombre de joueur 
+	}
 	if (digitalRead(buttonPinMenu) == HIGH || level != 1){ //If start button is pressed or you're winning
-		cout <<"level :" <<level<<endl;
+		cout << "C'est le joueur :" <<v1[0]->getID() << endl;
 		show_sequence();    //show the sequence
-		sleep(2*DELAY); //enlever le fichier on5.txt qui représente le bouton Menu
+		sleep(DELAY); //enlever le fichier on5.txt qui représente le bouton Menu
 		get_sequence();     //wait for your sequence
+		v1[0]->Score();
+		cout << "Ton score est de : " << v1[0]->getScore() << endl;
 	}
 }
 
