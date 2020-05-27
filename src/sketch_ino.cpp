@@ -47,6 +47,8 @@ void Board::beginMessage(){
 int sequence[MAX_LEVEL]; // contient la suite de chiffres pour les couleurs a afficher
 int your_sequence[MAX_LEVEL];
 int level = 1;
+int stop = 1;
+int id = 0;
 
 vector<Player *> v1;
 
@@ -196,14 +198,15 @@ void Board::wrong_sequence(){
 		digitalWrite(ledPinYellow, HIGH);
 		digitalWrite(ledPinRed, HIGH);
 		digitalWrite(ledPinBlue, HIGH);
-		sleep(DELAY);
+		sleep(DELAY/2);
 		digitalWrite(ledPinGreen, LOW);
 		digitalWrite(ledPinYellow, LOW);
 		digitalWrite(ledPinRed, LOW);
 		digitalWrite(ledPinBlue, LOW);
-		sleep(DELAY);;
+		sleep(DELAY/2);;
 	}
 	level = 1;
+	stop = 1;
 	
 }
 
@@ -212,19 +215,19 @@ void Board::right_sequence(){
 	digitalWrite(ledPinYellow, LOW);
 	digitalWrite(ledPinRed, LOW);
 	digitalWrite(ledPinBlue, LOW);
-	sleep(DELAY);
+	sleep(DELAY/2);
 
 	digitalWrite(ledPinGreen, HIGH);
 	digitalWrite(ledPinYellow, HIGH);
 	digitalWrite(ledPinRed, HIGH);
 	digitalWrite(ledPinBlue, HIGH);
-	sleep(DELAY);
+	sleep(DELAY/2);
 
 	digitalWrite(ledPinGreen, LOW);
 	digitalWrite(ledPinYellow, LOW);
 	digitalWrite(ledPinRed, LOW);
 	digitalWrite(ledPinBlue, LOW);
-	sleep(DELAY);
+	sleep(DELAY/2);
 
 	if (level < MAX_LEVEL)
 		level++;
@@ -236,13 +239,17 @@ void Board::loop(){
 	if (level == 1){
 		generate_sequence();//generate a sequence;
 	}
+	if (stop == 1){
+			id ++;
+			stop = 0;
+	}
 	if (digitalRead(buttonPinMenu) == HIGH || level != 1){ //If start button is pressed or you're winning
-		cout << "C'est le joueur :" <<v1[0]->getID() << endl;
+		cout << "C'est au tour du joueur :" <<v1[id]->getID() << endl;
 		show_sequence();    //show the sequence
 		sleep(DELAY); //enlever le fichier on5.txt qui représente le bouton Menu
 		get_sequence();     //wait for your sequence
-		v1[0]->Score();
-		cout << "Ton score est de : " << v1[0]->getScore() << endl;
+		v1[id]->Score();
+		cout << "Ton score est de : " << v1[id]->getScore() << endl;
 	}
 }
 
